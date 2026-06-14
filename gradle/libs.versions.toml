@@ -87,6 +87,9 @@ commonsIo = "2.5"
 packagedeps = "0.2.5"
 conveyor = "2.0"
 vaqua = "13"
+wear-compose = "1.4.0"
+wear = "1.4.0"
+wearable = "18.1.0"
 
 [libraries]
 desugaring = { group = "com.android.tools", name = "desugar_jdk_libs_nio", version.ref = "desugaring"}
@@ -233,6 +236,12 @@ androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "w
 androidx-paging-common = { group = "androidx.paging", name = "paging-common", version.ref = "paging-common" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 vaqua = { module = "org.violetlib:vaqua", version.ref = "vaqua" }
+wear-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "wear-compose" }
+wear-compose-foundation = { group = "androidx.wear.compose", name = "compose-foundation", version.ref = "wear-compose" }
+wear-compose-navigation = { group = "androidx.wear.compose", name = "compose-navigation", version.ref = "wear-compose" }
+wear = { group = "androidx.wear", name = "wear", version.ref = "wear" }
+play-services-wearable = { group = "com.google.android.gms", name = "play-services-wearable", version.ref = "wearable" }
+coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "coroutines-android" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android" }

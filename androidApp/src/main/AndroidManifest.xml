@@ -205,7 +205,11 @@
                 <action android:name="androidx.media3.session.MediaLibraryService" />
                 <action android:name="android.media.browse.MediaBrowserService" />
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
+                <action android:name="android.media.action.MEDIA_PLAY_FROM_SEARCH" />
             </intent-filter>
+            <meta-data
+                android:name="android.media.session.MediaSession.TAG"
+                android:value="SimpMusic" />
         </service>
         <service
             android:name="com.maxrave.media3.service.download.MusicDownloadService"
@@ -225,6 +229,18 @@
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name=".wear.WearCommandListenerService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
+                <data
+                    android:host="*"
+                    android:pathPrefix="/simpmusic/cmd"
+                    android:scheme="wear" />
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="com.google.android.gms.car.application"

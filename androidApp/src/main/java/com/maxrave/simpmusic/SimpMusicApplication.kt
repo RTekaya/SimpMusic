@@ -15,11 +15,13 @@ import coil3.disk.DiskCache
 import coil3.network.okhttp.OkHttpNetworkFetcherFactory
 import coil3.request.CachePolicy
 import coil3.request.crossfade
+import androidx.media3.common.util.UnstableApi
 import com.maxrave.data.di.loader.loadAllModules
 import com.maxrave.domain.manager.DataStoreManager
 import com.maxrave.logger.Logger
 import com.maxrave.simpmusic.di.viewModelModule
 import com.maxrave.simpmusic.service.backup.AutoBackupScheduler
+import com.maxrave.simpmusic.wear.WearBridgeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -45,7 +47,9 @@ class SimpMusicApplication :
     private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private val dataStoreManager: DataStoreManager by inject()
     private lateinit var autoBackupScheduler: AutoBackupScheduler
+    private lateinit var wearBridgeManager: WearBridgeManager
 
+    @UnstableApi
     override fun onCreate() {
         super.onCreate()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -56,6 +60,9 @@ class SimpMusicApplication :
             loadAllModules()
             loadKoinModules(viewModelModule)
         }
+
+        wearBridgeManager = WearBridgeManager(this)
+        wearBridgeManager.start()
         // provide custom configuration
         val workConfig =
             Configuration

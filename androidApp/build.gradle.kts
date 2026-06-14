@@ -7,6 +7,11 @@ val isFullBuild: Boolean =
         false
     }
 
+val localProperties = Properties().apply {
+    val f = rootProject.file("local.properties")
+    if (f.exists()) load(f.inputStream())
+}
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.sentry.gradle)
@@ -18,6 +23,18 @@ android {
 
     namespace = "com.maxrave.simpmusic"
     compileSdk = 37
+
+    signingConfigs {
+        create("release") {
+            storeFile = file(localProperties.getProperty("KEYSTORE_FILE", "../simpmusic.jks"))
+            storePassword = localProperties.getProperty("KEYSTORE_PASSWORD")
+                ?: System.getenv("KEYSTORE_PASSWORD")
+            keyAlias = localProperties.getProperty("KEY_ALIAS")
+                ?: System.getenv("KEY_ALIAS")
+            keyPassword = localProperties.getProperty("KEY_PASSWORD")
+                ?: System.getenv("KEY_PASSWORD")
+        }
+    }
 
     defaultConfig {
         applicationId = "com.maxrave.simpmusic"
@@ -83,6 +100,7 @@ android {
 
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -157,11 +175,16 @@ dependencies {
     implementation(libs.legacy.support.v4)
     // Coroutines
     implementation(libs.coroutines.android)
+    implementation(libs.coroutines.play.services)
 
     // Glance
     implementation(libs.glance)
     implementation(libs.glance.appwidget)
     implementation(libs.glance.material3)
+
+    // Wear OS bridge
+    implementation(libs.play.services.wearable)
+    implementation(libs.media3.session)
 
     implementation(projects.composeApp)
     implementation(projects.data)
@@ -171,6 +194,9 @@ dependencies {
     } else {
         implementation(projects.crashlyticsEmpty)
     }
+
+    // Bundle the Wear OS companion app
+    wearApp(project(":wearApp"))
 }
 
 sentry {
