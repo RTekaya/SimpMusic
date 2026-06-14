@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
@@ -7,7 +9,7 @@ android {
     namespace = "com.maxrave.simpmusic.wear"
     compileSdk = 37
 
-    val localProperties = java.util.Properties().apply {
+    val localProperties = Properties().apply {
         val f = rootProject.file("local.properties")
         if (f.exists()) load(f.inputStream())
     }
