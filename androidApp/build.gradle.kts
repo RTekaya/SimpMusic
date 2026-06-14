@@ -195,8 +195,6 @@ dependencies {
         implementation(projects.crashlyticsEmpty)
     }
 
-    // Bundle the Wear OS companion app
-    add("wearApp", project(":wearApp"))
 }
 
 sentry {
