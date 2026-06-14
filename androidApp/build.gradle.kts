@@ -196,7 +196,7 @@ dependencies {
     }
 
     // Bundle the Wear OS companion app
-    wearApp(project(":wearApp"))
+    add("wearApp", project(":wearApp"))
 }
 
 sentry {
